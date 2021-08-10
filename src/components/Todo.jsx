@@ -6,12 +6,12 @@ import {
 } from '@material-ui/core';
 import './Todo.css';
 
-const Todo = ({ todo }) => {
+const Todo = ({ todo, timestamp }) => {
   return (
     <List className="todo__list">
       <ListItem>
         {/* <ListItemAvatar></ListItemAvatar> */}
-        <ListItemText primary="Todo" secondary={todo} />
+        <ListItemText primary={todo} secondary={'todo'} />
       </ListItem>
     </List>
   );

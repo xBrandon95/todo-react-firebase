@@ -1,13 +1,17 @@
 import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
 import { useState } from 'react';
 import db from '../firebase/config';
+import firebase from 'firebase';
 
 const Form = ({ setTodos }) => {
   const [input, setInput] = useState('');
 
   const addTodo = (e) => {
     e.preventDefault();
-    db.collection('todos').add({ todo: input });
+    db.collection('todos').add({
+      todo: input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
     setInput('');
   };
 

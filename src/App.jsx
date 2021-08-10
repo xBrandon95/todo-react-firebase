@@ -9,11 +9,17 @@ function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    db.collection('todos').onSnapshot((snapshot) => {
-      setTodos(
-        snapshot.docs.map((doc) => ({ id: doc.id, todo: doc.data().todo }))
-      );
-    });
+    db.collection('todos')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot) => {
+        setTodos(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            todo: doc.data().todo,
+            timestamp: doc.data().timestamp.toDate(),
+          }))
+        );
+      });
   }, []);
 
   return (
@@ -21,8 +27,8 @@ function App() {
       <h1>Todo App</h1>
       <Form setTodos={setTodos} />
       <ul>
-        {todos.map(({ id, todo }) => (
-          <Todo key={id} todo={todo} />
+        {todos.map(({ id, todo, timestamp }) => (
+          <Todo key={id} todo={todo} timestamp={timestamp} />
         ))}
       </ul>
     </div>
